@@ -15,40 +15,64 @@ function validation(data){
     return true ;
 }
 
-add_btn.addEventListener("click" , ()=>{
-     const data = input_task.value;
-     if(!validation(data)) return;
 
-    const task_data  = document.createElement("div"); 
+
+function renderTasks(){
+    task_list.innerHTML="";
+
+    for(let i=0; i<tasks.length; i++){
+        const task = tasks[i];
+    
+
+    const task_item = document.createElement("div");
 
     const list_item = document.createElement("span");
-    list_item.textContent = data;
+    list_item.textContent = task.text;
+
+    const check_box = document.createElement("input");
+    check_box.type = "checkbox";
+    check_box.checked = task.completed;
+
+    check_box.addEventListener("change" , ()=>{
+        task.completed = check_box.checked;
+        renderTasks();
+    });
 
     const delete_btn = document.createElement("button");
     delete_btn.textContent = "Delete";
 
-    const check_box = document.createElement("input");
-    check_box.type = "checkbox";
-
-    check_box.addEventListener("change" , ()=>{
-        if(check_box.checked){
-            list_item.style.textDecoration = "line-through";
-        }else{
-            list_item.style.textDecoration = "none";
-        }
-    });
-
     delete_btn.addEventListener("click" , ()=>{
-        task_data.remove();
+        tasks = tasks.filter(t => t.id !== task.id);
+        renderTasks();
     });
 
-    task_data.appendChild(check_box);
-    task_data.appendChild(list_item);
-    task_data.appendChild(delete_btn);
+    if(task.completed){
+        list_item.style.textDecoration = "line-through";
+    }
 
-    task_list.appendChild(task_data);
+    task_item.appendChild(check_box);
+    task_item.appendChild(list_item);
+    task_item.appendChild(delete_btn);
 
-    input_task.focus();
+    task_list.appendChild(task_item);
+    
+    }
+
+}
+
+add_btn.addEventListener("click" , ()=>{
+     const data = input_task.value;
+     if(!validation(data)) return;
+
+    const newTask = {
+        id:Date.now(),
+        text:data,
+        completed:false
+    };
+
+    tasks.push(newTask);
+
+    renderTasks();
     input_task.value = "";
-
+    input_task.focus();
 });

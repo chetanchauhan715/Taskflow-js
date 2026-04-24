@@ -16,6 +16,16 @@ function validation(data){
 }
 
 
+function saveTasks(){
+    localStorage.setItem("tasks" , JSON.stringify(tasks));
+}
+
+
+const saved = localStorage.getItem("tasks");
+if(saved){
+    tasks = JSON.parse(saved);
+    renderTasks();
+}
 
 function renderTasks(){
     task_list.innerHTML="";
@@ -35,6 +45,7 @@ function renderTasks(){
 
     check_box.addEventListener("change" , ()=>{
         task.completed = check_box.checked;
+        saveTasks();
         renderTasks();
     });
 
@@ -43,6 +54,7 @@ function renderTasks(){
 
     delete_btn.addEventListener("click" , ()=>{
         tasks = tasks.filter(t => t.id !== task.id);
+        saveTasks();
         renderTasks();
     });
 
@@ -71,6 +83,7 @@ add_btn.addEventListener("click" , ()=>{
     };
 
     tasks.push(newTask);
+    saveTasks();
 
     renderTasks();
     input_task.value = "";

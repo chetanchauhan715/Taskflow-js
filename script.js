@@ -6,6 +6,8 @@ const task_list = document.getElementById("task-list");
 
 
 let tasks = [];
+let searchText = "";
+let filterType = "all";
 
 function validation(data){
     if(data.trim() === ""){
@@ -30,8 +32,21 @@ if(saved){
 function renderTasks(){
     task_list.innerHTML="";
 
-    for(let i=0; i<tasks.length; i++){
-        const task = tasks[i];
+    let filteredTasks = tasks;
+    if(searchText){
+        filteredTasks = tasks.filter(t =>
+            t.text.toLowerCase().includes(searchText)
+        );
+    }
+
+    if(filterType==="completed"){
+        filteredTasks = filteredTasks.filter(t => t.completed);
+    }else if(filterType==="pending"){
+        filteredTasks = filteredTasks.filter(t => !t.completed);
+    }
+
+    for(let i=0; i<filteredTasks.length; i++){
+        const task = filteredTasks[i];
     
 
     const task_item = document.createElement("div");
@@ -88,4 +103,16 @@ add_btn.addEventListener("click" , ()=>{
     renderTasks();
     input_task.value = "";
     input_task.focus();
+});
+
+
+// search event 
+search_input.addEventListener("input" , ()=>{
+    searchText = search_input.value.toLowerCase();
+    renderTasks();
+});
+
+filter_select.addEventListener("change" , ()=>{
+    filterType = filter_select.value;
+    renderTasks();
 });

@@ -1,0 +1,127 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  
+  /* BODY */
+  body {
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+  
+  /* MAIN CONTAINER */
+  .main-container {
+    width: 420px;
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  
+  /* HEADER */
+  .header h1 {
+    margin-bottom: 5px;
+  }
+  
+  .header p {
+    color: #94a3b8;
+    font-size: 14px;
+  }
+  
+  /* INPUT AREA */
+  .input-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .input-container input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+  }
+  
+  .input-container button {
+    padding: 10px 15px;
+    border: none;
+    background: #22c55e;
+    color: black;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  
+  .input-container button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 #16a34a;
+  }
+  
+  /* SEARCH */
+  .search-container input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 10px;
+  }
+  
+  /* FILTER */
+  .filter-container select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 15px;
+  }
+  
+  /* TASK LIST */
+  #task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* TASK ITEM */
+  #task-list div {
+    background: #334155;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.15s ease;
+  }
+  
+  #task-list div:hover {
+    transform: scale(1.02);
+  }
+  
+  /* TEXT */
+  #task-list span {
+    flex: 1;
+    margin-left: 10px;
+  }
+  
+  /* DELETE BUTTON */
+  #task-list button {
+    background: #ef4444;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* COMPLETED */
+  .completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }

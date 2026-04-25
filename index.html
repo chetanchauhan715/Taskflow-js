@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
     <title>TaskFlow</title>
 </head>
 <body>
@@ -17,6 +18,11 @@
 
     <div class="input-container">
         <input id="task-input" type="text" placeholder="What do you need to do">
+        <select id="priority">
+            <option value="low">low</option>
+            <option value="medium">medium</option>
+            <option value="high">high</option>
+        </select>
         <button id="add-btn" type="button">Add</button>
     </div>
 
@@ -27,9 +33,9 @@
 
     <div class="filter-container">
         <select name="" id="filter">
-            <option value="All">All Tasks</option>
-            <option value="Completed">Completed</option>
-            <option value="Pending">Pending</option>
+            <option value="all">All Tasks</option>
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
         </select>
     </div>
 

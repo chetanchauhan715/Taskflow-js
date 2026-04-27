@@ -55,8 +55,8 @@ function renderTasks(){
     }
 
     filtered_Task.sort( (a,b) =>{
-        if(a.pinned && !b.pinner) return -1;
-        if(!a.pinned && b.pinner) return 1;
+        if(a.pinned && !b.pinned) return -1;
+        if(!a.pinned && b.pinned) return 1;
 
         return priority_order[b.priority] - priority_order[a.priority];
     });
@@ -112,6 +112,13 @@ function renderTasks(){
         if(editingId === task.id){
             textElement = document.createElement("input");
             textElement.value = task.text;
+           
+            // task_item.appendChild(textElement);
+            requestAnimationFrame(() => {
+                if(editingId===task.id){
+                    textElement.focus();
+                }
+            });
 
             action_btn = document.createElement("button");
             action_btn.textContent = "Save";

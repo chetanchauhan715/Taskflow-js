@@ -9,6 +9,7 @@ const priority_select = document.getElementById("priority");
 let tasks = [];
 let searchText = "";
 let filterType = "all";
+let editingId = null;
 
 const priority_order = {
     high:3,
@@ -37,91 +38,121 @@ if(saved){
 }
 
 function renderTasks(){
-    task_list.innerHTML="";
+    task_list.innerHTML = "";
 
-    let filteredTasks = tasks;
+    let filtered_Task = tasks;
 
     if(searchText){
-        filteredTasks = tasks.filter(t =>
-            t.text.toLowerCase().includes(searchText)
-        );
+        filtered_Task = filtered_Task.filter(t =>
+        t.text.toLowerCase().includes(searchText)
+    );
     }
 
-    if(filterType==="completed"){
-        filteredTasks = filteredTasks.filter(t => t.completed);
-    }else if(filterType==="pending"){
-        filteredTasks = filteredTasks.filter(t => !t.completed);
+    if(filterType === "completed"){
+        filtered_Task = filtered_Task.filter(t => t.completed);
+    } else if(filterType=== "pending"){
+        filtered_Task = filtered_Task.filter(t => !t.completed)
     }
 
-    filteredTasks.sort( (a,b) =>{
-        if(a.pinned && !b.pinned) return -1;
-        if(!a.pinned && b.pinned) return 1;
-       
+    filtered_Task.sort( (a,b) =>{
+        if(a.pinned && !b.pinner) return -1;
+        if(!a.pinned && b.pinner) return 1;
+
         return priority_order[b.priority] - priority_order[a.priority];
     });
 
-    for(let i=0; i<filteredTasks.length; i++){
-        const task = filteredTasks[i];
+    for(let i=0; i<filtered_Task.length; i++){
+        const task = filtered_Task[i];
+
+        // CREATE
+        const task_item = document.createElement("div");
+        task_item.classList.add("task-item");
+
+        const check_box = document.createElement("input");
+        check_box.type = "checkbox";
+        check_box.checked = task.completed;
+
+        const priority_tag = document.createElement("span");
+        priority_tag.textContent = task.priority;
+        priority_tag.classList.add("priority" , task.priority);
+
+        const pin_btn = document.createElement("button");
+        if(task.pinned){
+            pin_btn.textContent = "📌 Pinned" ;
+        } else{
+            pin_btn.textContent = "📌";
+        }
+
+        const delete_btn = document.createElement("button");
+        delete_btn.textContent = "Delete";
+
+
+        // Events 
+        check_box.addEventListener("change" , ()=>{
+            task.completed = check_box.checked ;
+            saveTasks();
+            renderTasks();
+        });
+
+        pin_btn.addEventListener("click" , ()=>{
+            task.pinned = !task.pinned;
+            saveTasks();
+            renderTasks();
+        });
+
+        delete_btn.addEventListener("click" , ()=>{
+            tasks = tasks.filter(t => t.id !== task.id);
+            saveTasks();
+            renderTasks();
+        });
+
+        let textElement;
+        let action_btn ;
+
+        if(editingId === task.id){
+            textElement = document.createElement("input");
+            textElement.value = task.text;
+
+            action_btn = document.createElement("button");
+            action_btn.textContent = "Save";
+
+            action_btn.addEventListener("click" , ()=>{
+                const edited_data =textElement.value;
+                if(!validation(edited_data)) return ;
+
+                task.text = edited_data;
+                editingId = null;
+                saveTasks();
+                renderTasks();
+            });
+        } else {
+            textElement = document.createElement("span");
+            textElement.textContent = task.text;
+
+            action_btn = document.createElement("button");
+            action_btn.textContent = "Edit";
+
+            action_btn.addEventListener("click" , ()=>{
+                editingId = task.id;
+                renderTasks();
+            });
+        }
+
+        if(task.pinned){
+            task_item.style.backgroundColor = "#fff3cd";
+        }
     
 
-    const task_item = document.createElement("div");
-    task_item.classList.add("task-item");
-
-    const list_item = document.createElement("span");
-    list_item.textContent = task.text;
-    list_item.classList.add("task-text");
-
-    const priority_tag = document.createElement("span");
-    priority_tag.textContent = task.priority;
-    priority_tag.classList.add("priority", task.priority);
-
-    const check_box = document.createElement("input");
-    check_box.type = "checkbox";
-    check_box.checked = task.completed;
-
-    // pin task ---
-    const pin_btn = document.createElement("button");
-    pin_btn.textContent = "📌";
-
-    if(task.pinned){
-    pin_btn.textContent = "📌 Pinned";
-    task_item.style.backgroundColor = "#fff3cd";
-    }
-
-    pin_btn.addEventListener("click", ()=>{
-    task.pinned = !task.pinned;
-    saveTasks();
-    renderTasks();
-    });
-
-    check_box.addEventListener("change" , ()=>{
-        task.completed = check_box.checked;
-        saveTasks();
-        renderTasks();
-    });
-
-    const delete_btn = document.createElement("button");
-    delete_btn.textContent = "Delete";
-
-    delete_btn.addEventListener("click" , ()=>{
-        tasks = tasks.filter(t => t.id !== task.id);
-        saveTasks();
-        renderTasks();
-    });
-
-    if(task.completed){
-        list_item.style.textDecoration = "line-through";
-    }
-
+    // append 
     task_item.appendChild(pin_btn);
     task_item.appendChild(check_box);
-    task_item.appendChild(list_item);
+    task_item.appendChild(textElement);
+    task_item.appendChild(action_btn);
     task_item.appendChild(priority_tag);
     task_item.appendChild(delete_btn);
 
     task_list.appendChild(task_item);
-    
-    }
+}
 
 }
 

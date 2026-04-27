@@ -110,8 +110,7 @@ TaskFlow/
 
 ## 📸 Preview
 
-> Clean, minimal, production-style task manager UI
-> (Add your screenshot here)
+<img width="1261" height="635" alt="image" src="https://github.com/user-attachments/assets/0aa3e1c2-e499-42e5-9820-dfcf77a4484f" />
 
 ---
 

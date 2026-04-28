@@ -67,14 +67,26 @@ function renderTasks(){
 
     // Empty State UI
     if(tasks.length === 0){
-        headLine = document.createElement("span");
-        subText = document.createElement("p");
+       const emptydiv = document.createElement('div');
+       emptydiv.classList.add("empty-state");
 
-        headLine.textContent = "No tasks yet";
-        subText.textContent = "Add your first task and get started 🚀";
+       const icon = document.createElement("div");
+       icon.classList.add("empty-icon");
+       icon.textContent = "📝";
+    
+       const title = document.createElement("h2");
+       title.textContent = "No tasks yet";
 
-        task_list.appendChild(headLine);
-        task_list.appendChild(subText);
+       const description = document.createElement("p");
+       description.textContent = "Add your first task and get started 🚀";
+
+       emptydiv.appendChild(icon);
+       emptydiv.appendChild(title);
+       emptydiv.appendChild(description);
+    
+       task_list.appendChild(emptydiv);
+
+
     } else if(tasks.length > 0 && filtered_Task.length === 0){
         
         headLine = document.createElement("span");

@@ -75,17 +75,23 @@ select {
 }
 
 button {
-  padding: 0.6rem 1rem;
+  background-color: #4CAF50;
+  color: white;
   border: none;
-  border-radius: var(--radius);
-  background: var(--primary);
-  color: #fff;
-  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s ease;
+
+  transition: all 0.2s ease;
 }
 button:hover {
-  background: #1d4ed8;
+  background-color: #43a047; /* slightly darker */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* ===== Task List ===== */
@@ -162,5 +168,50 @@ button:hover {
   }
   button {
     width: 100%;
+  }
+}
+
+/* Green slides on Complete Task */
+.task-completing{
+  animation: completeTask 0.7s ease-out;
+}
+
+@keyframes completeTask {
+  0%{
+    background-color: transparent;
+    transform: translateX(0);
+  }
+  50%{
+    background-color: #7bcf8f;
+    transform: translateX(5px);
+  }
+
+  100%{
+    background-color: #d4edda;
+    transform: translateX(0);
+  }
+  
+}
+
+
+.task-undone{
+  animation: pendingTask 0.9s ease;
+}
+
+@keyframes pendingTasks{
+
+  100%{
+    background-color: #f7efef;
+    transform: translate(0);
+  }
+
+  50%{
+    background-color: #fab5b5;
+    transform: translateY(5px);
+  }
+
+  0%{
+    background-color: #f7efef;
+    transform: translate(0);
   }
 }

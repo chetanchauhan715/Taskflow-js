@@ -61,6 +61,34 @@ function renderTasks(){
         return priority_order[b.priority] - priority_order[a.priority];
     });
 
+
+    let headLine;
+    let subText;
+
+    if(tasks.length === 0){
+        headLine = document.createElement("span");
+        subText = document.createElement("p");
+
+        headLine.textContent = "No tasks yet";
+        subText.textContent = "Add your first task and get started 🚀";
+
+        task_list.appendChild(headLine);
+        task_list.appendChild(subText);
+    } else if(tasks.length > 0 && filtered_Task.length === 0){
+        
+        headLine = document.createElement("span");
+        subText = document.createElement("p");
+
+        headLine.textContent = "No tasks found";
+        subText.textContent = "Try adjusting your search or filters";
+        task_list.appendChild(headLine);
+        task_list.appendChild(subText);
+
+
+    } else {
+
+    
+
     for(let i=0; i<filtered_Task.length; i++){
         const task = filtered_Task[i];
 
@@ -159,6 +187,8 @@ function renderTasks(){
     task_item.appendChild(delete_btn);
 
     task_list.appendChild(task_item);
+}
+
 }
 
 }

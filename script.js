@@ -65,6 +65,7 @@ function renderTasks(){
     let headLine;
     let subText;
 
+    // Empty State UI
     if(tasks.length === 0){
         headLine = document.createElement("span");
         subText = document.createElement("p");
@@ -117,9 +118,20 @@ function renderTasks(){
 
         // Events 
         check_box.addEventListener("change" , ()=>{
-            task.completed = check_box.checked ;
-            saveTasks();
-            renderTasks();
+           if(check_box.checked){  // Checked Animation - Task Done 
+            task_item.classList.add("task-completing");
+
+            task_item.addEventListener("animationend", ()=>{
+
+                task.completed = true;
+                saveTasks();
+                renderTasks();
+            }, {once:true});
+           } else {
+                task.completed = false;
+                saveTasks();
+                renderTasks();
+           }
         });
 
         pin_btn.addEventListener("click" , ()=>{

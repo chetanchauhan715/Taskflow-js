@@ -165,25 +165,56 @@ function renderTasks(){
             textElement = document.createElement("input");
             textElement.value = task.text;
            
-            // task_item.appendChild(textElement);
+            // focus + select text
             requestAnimationFrame(() => {
                 if(editingId===task.id){
                     textElement.focus();
+                    textElement.select();
                 }
             });
 
-            action_btn = document.createElement("button");
-            action_btn.textContent = "Save";
+            // save function 
 
-            action_btn.addEventListener("click" , ()=>{
-                const edited_data =textElement.value;
+            function saveEdit(){
+                const edited_data = textElement.value;
                 if(!validation(edited_data)) return ;
 
                 task.text = edited_data;
                 editingId = null;
                 saveTasks();
                 renderTasks();
+            }
+
+            action_btn = document.createElement("button");
+            action_btn.textContent = "Save";
+
+            action_btn.addEventListener("click" , saveEdit);
+
+            // make reusable function - for save edit  
+
+            // action_btn.addEventListener("click" , ()=>{
+            //     const edited_data =textElement.value;
+            //     if(!validation(edited_data)) return ;
+
+            //     task.text = edited_data;
+            //     editingId = null;
+            //     saveTasks();
+            //     renderTasks();
+            // });
+
+            // keyboard support
+
+            textElement.addEventListener("keydown" , (e) =>{
+                if(e.key === "Enter"){
+                    saveEdit();
+                }
+
+                if(e.key === "Escape"){
+                    editingId = null;
+                    renderTasks();
+                }
             });
+
         } else {
             textElement = document.createElement("span");
             textElement.textContent = task.text;
